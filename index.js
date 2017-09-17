@@ -1,3 +1,5 @@
+var protocol = ""
+
 $( document ).ready(function() {
     /*
     $.ajax({
@@ -14,6 +16,14 @@ $( document ).ready(function() {
     });
     */
 
+    var prot = location.protocol;
+    console.log("Protocol: ", prot);
+    if (prot == 'https:') {
+        protocol = prot;
+    } else {
+        protocol = 'http:';
+    }
+
     $('.yglist').on('click', 'span', function(e) {
         //console.log($(this).data('id'));
         getYrkesId($(this).data('id'));
@@ -29,7 +39,7 @@ $( document ).ready(function() {
 
 var getYrkesOmraden = function() {
     $.ajax({
-        url: "http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrkesomraden",
+        url: protocol + "//api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrkesomraden",
         success: function( result ) {
             var data = result.soklista.sokdata
             var yrkesOmradenList = [];
@@ -44,7 +54,7 @@ var getYrkesOmraden = function() {
 var getYrkesGrupper = function(yOId) {
     
     $.ajax({
-        url: "http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrkesgrupper?yrkesomradeid=" + Number(yOId),
+        url: protocol + "//api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrkesgrupper?yrkesomradeid=" + Number(yOId),
         success: function( result ) {
             var data = result.soklista.sokdata
             for (var i in data) {
@@ -58,7 +68,7 @@ var getYrkesGrupper = function(yOId) {
 
 var getYrkesId = function(yGId) {
     $.ajax({
-        url: "http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken?yrkesgruppid=" + Number(yGId),
+        url: protocol + "//api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken?yrkesgruppid=" + Number(yGId),
         success: function( result ) {
             var data = result.soklista.sokdata
             for (var i in data) {
@@ -72,7 +82,7 @@ var getYrkesId = function(yGId) {
 
 var getMatchning = function(yId) {
     $.ajax({
-        url: "http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?lanid=14&kommunid=1480&yrkesid=" + yId + "&nyckelord=",
+        url: protocol + "//api.arbetsformedlingen.se/af/v0/platsannonser/matchning?lanid=14&kommunid=1480&yrkesid=" + yId + "&nyckelord=",
         success: function( result ) {
             var data = result.matchningslista.matchningdata
             for (var i in data) {
